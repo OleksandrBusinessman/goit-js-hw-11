@@ -33,16 +33,15 @@ function onFormSubmit(e) {
     return;
   }
   currentPage = 1;
+  galleryEl.innerHTML = '';
+  observer.unobserve(guardEl);
   fetchData(PER_PAGE, currentPage, SEARCH_QUERY)
     .then(({ data: { hits, totalHits } }) => {
       if (!hits.length) {
-        observer.unobserve(guardEl);
         Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
-        galleryEl.innerHTML = '';
       } else if (hits.length > 0) {
-        observer.unobserve(guardEl);
         galleryEl.innerHTML = createMarkup(hits);
         simpleLightbox.refresh();
         Notify.success(`Hooray! We found ${totalHits} images.`);
@@ -85,20 +84,20 @@ function createMarkup(arr) {
         views,
         comments,
         downloads,
-      }) => `<a href="${largeImageURL}"><div class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+      }) => `<a class="gallery__item" href="${largeImageURL}"><div class="photo-card">
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" height="250" />
   <div class="info">
     <p class="info-item">
-      <b>Likes${likes}</b>
+      <b>Likes<br /><span class="info-item__value">${likes}</span></b>
     </p>
     <p class="info-item">
-      <b>Views${views}</b>
+      <b>Views<br /><span class="info-item__value">${views}</span></b>
     </p>
     <p class="info-item">
-      <b>Comments${comments}</b>
+      <b>Comments<br /><span class="info-item__value">${comments}</span></b>
     </p>
     <p class="info-item">
-      <b>Downloads${downloads}</b>
+      <b>Downloads<br /><span class="info-item__value">${downloads}</span></b>
     </p>
   </div>
 </div></a>`
