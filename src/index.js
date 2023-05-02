@@ -25,6 +25,9 @@ async function onFormSubmit(e) {
   e.preventDefault();
   inputValue = e.target.elements[0].value.toLowerCase().trim();
   if (!inputValue) {
+    observer.unobserve(guardEl);
+    galleryEl.innerHTML = '';
+    Notify.info('Please enter a search term!');
     return;
   }
   currentPage = 1;
@@ -55,11 +58,6 @@ async function onFormSubmit(e) {
 }
 
 async function onPagination(entries, observer) {
-  if (!inputValue) {
-    observer.unobserve(guardEl);
-    Notify.info('Please enter a search term!');
-    return;
-  }
   await entries.forEach(async entry => {
     if (entry.isIntersecting) {
       currentPage += 1;
