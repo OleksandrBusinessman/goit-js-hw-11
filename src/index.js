@@ -23,7 +23,7 @@ formEl.addEventListener('submit', onFormSubmit);
 
 async function onFormSubmit(e) {
   e.preventDefault();
-  inputValue = e.target.elements[0].value.toLowerCase().trim();
+  inputValue = e.target.elements.searchQuery.value.toLowerCase().trim();
   if (!inputValue) {
     observer.unobserve(guardEl);
     galleryEl.innerHTML = '';
