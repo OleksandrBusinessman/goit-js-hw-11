@@ -10,9 +10,13 @@ const searchParams = new URLSearchParams({
 });
 
 async function fetchData(PER_PAGE, currentPage, SEARCH_QUERY) {
-  const URL = `${BASE_URL}?${searchParams}&per_page=${PER_PAGE}&page=${currentPage}&q=${SEARCH_QUERY}`;
-  const resp = await axios.get(URL);
-  return resp;
+  try {
+    const URL = `${BASE_URL}?${searchParams}&per_page=${PER_PAGE}&page=${currentPage}&q=${SEARCH_QUERY}`;
+    const resp = await axios.get(URL);
+    return resp;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export { fetchData };
